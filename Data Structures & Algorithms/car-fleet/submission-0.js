@@ -1,0 +1,22 @@
+class Solution {
+    /**
+     * @param {number} target
+     * @param {number[]} position
+     * @param {number[]} speed
+     * @return {number}
+     */
+    carFleet(target, position, speed) {
+        const pair = position.map((i,index) => [i,speed[index]]);
+        pair.sort((a,b)=>b[0]-a[0]);
+        let prevTime = (target - pair[0][0]) / pair[0][1];
+        let fleets = 1;
+        for(let i = 0; i<pair.length;i++) {
+            const currTime = (target - pair[i][0]) / pair[i][1];
+            if(currTime>prevTime) {
+                fleets++;
+                prevTime = currTime;
+            } 
+        }
+        return fleets;
+    }
+}

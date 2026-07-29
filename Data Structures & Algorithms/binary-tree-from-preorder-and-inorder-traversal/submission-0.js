@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     constructor(val = 0, left = null, right = null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    /**
+     * @param {number[]} preorder
+     * @param {number[]} inorder
+     * @return {TreeNode}
+     */
+    buildTree(preorder, inorder) {
+        let pre_index = 0;
+        let ind = new Map();
+        inorder.map((val,i)=>ind.set(val,i))    
+        function dfs(l,r) {
+                if(l>r ) return null;
+                let root_val = preorder[pre_index++];
+                let root = new TreeNode(root_val);
+                let mid = ind.get(root_val);
+                root.left = dfs(l,mid-1);
+                root.right = dfs(mid+1,r);
+                return root;
+        }
+        return dfs(0,inorder.length-1)
+    }
+}
